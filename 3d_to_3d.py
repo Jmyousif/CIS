@@ -1,7 +1,15 @@
 import numpy as np
 import math
 
-class PointRegistration():
-    def __init__(self):
-        print("hi")
-    def ICP(self, M, Q, F0, mu0):
+def rigid_transform(a, b):
+    a_mean = np.sum(a, axis=1) / np.size(a, axis=1)
+    b_mean = np.sum(b, axis=1) / np.size(b, axis=1)
+    a_err = a - a_mean
+    b_err = b - b_mean
+    # need to find R that minimizes sum(R*a_err -b_err)^2
+    prod = np.dot(a_err, b_err)
+    numpy.linalg.svd(prod)
+
+    # find p vector
+    p = b_mean - np.dot(R, a_mean)
+    F = Frame(R,p)
