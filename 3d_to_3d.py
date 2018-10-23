@@ -1,4 +1,5 @@
 import numpy as np
+import Frame
 import math
 
 def rigid_transform(a, b):
@@ -8,10 +9,9 @@ def rigid_transform(a, b):
     b_err = b - b_mean
     # need to find R that minimizes sum(R*a_err -b_err)^2
     # first calculate H
-    np.linalg.svd(np.dot(a_err, b_err))
-    R =
-
+    u, s, v = np.linalg.svd(np.dot(a_err, b_err))
+    r = np.dot(v, np.transpose(u))
     # find p vector
-    p = b_mean - np.dot(R, a_mean)
-
-    F = Frame(R,p)
+    p = b_mean - np.dot(r, a_mean)
+    F = Frame(r,p)  
+    return F
