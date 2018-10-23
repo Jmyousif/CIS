@@ -3,25 +3,44 @@ import numpy as np
 
 class Frame():
     def __init__(self, rot = np.zeros(3), tr = 0):
-        self.rot = rot
-        self.tr = tr
+        try:
+            if rot.shape[0] != 3 or rot.shape[1] != 3:
+                raise ValueError
+            self.rot = rot
+            if tr.shape[0] != 1 or tr.shape[1] != 3:
+                raise ValueError
+            self.tr = tr
+        except ValueError:
+            print("Not valid parameters")
+
     def setRot(self, rot):
-        if rot.shape[0] != 3 or rot.shape[1] != 3:
+        try:
+            if rot.shape[0] != 3 or rot.shape[1] != 3:
+                raise ValueError
+            self.rot = rot
+        except ValueError:
             print("input rotation matrix is not 3x3!")
-            return
-        self.rot = rot
+
     def setTr(self, tr):
-        if tr.shape[0] != 1 or tr.shape[1] != 3:
+        try:
+            if tr.shape[0] != 1 or tr.shape[1] != 3:
+                raise ValueError
+            self.tr = tr
+        except ValueError:
             print("input vector is not a column vector!")
-            return
-        self.tr = tr
+
     def FFmult(self, F):
-        if not isinstance(F, Frame):
+        try:
+            if not isinstance(F, Frame):
+                raise ValueError
+            return Frame(self.rot * F.rot, self.rot * F.tr + self.tr)
+        except ValueError:
             print("not a frame!")
-            return
-        return Frame(self.rot * F.rot, self.rot * F.tr + self.tr)
+
     def FPmult(self, p):
-        if p.shape[0] != 1 or p.shape[1] != 3:
+        try:
+            if p.shape[0] != 1 or p.shape[1] != 3:
+                raise ValueError
+            return self.rot * p + self.tr
+        except ValueError:
             print("input vector is not a column vector!")
-            return
-        return self.rot * p + self.tr
