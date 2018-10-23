@@ -13,5 +13,5 @@ def rigid_transform(a, b):
     r = np.dot(v, np.transpose(u))
     # find p vector
     p = b_mean - np.dot(r, a_mean)
-    F = Frame(r,p)  
+    F = Frame(r,p)
     return F
