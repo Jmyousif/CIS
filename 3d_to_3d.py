@@ -7,9 +7,11 @@ def rigid_transform(a, b):
     a_err = a - a_mean
     b_err = b - b_mean
     # need to find R that minimizes sum(R*a_err -b_err)^2
-    prod = np.dot(a_err, b_err)
-    numpy.linalg.svd(prod)
+    # first calculate H
+    np.linalg.svd(np.dot(a_err, b_err))
+    R =
 
     # find p vector
     p = b_mean - np.dot(R, a_mean)
+
     F = Frame(R,p)
