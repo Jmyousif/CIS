@@ -4,7 +4,7 @@ import PointTransformations as PT
 
 
 class Frame:
-    def __init__(self, rot=np.zeros(3, 3), tr=np.zeros(3, 1)):
+    def __init__(self, rot=np.zeros((3, 3)), tr=np.zeros((3, 1))):
         try:
             if rot.shape[0] != 3 or rot.shape[1] != 3:
                 raise ValueError

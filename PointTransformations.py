@@ -7,7 +7,7 @@ class PointTransformations:
         print("init")
 
     def makeRotationMatrix(self, theta, letter):
-        rot = np.zeros(3)
+        rot = np.zeros(3, 3)
         if letter == 'x':
             rot[0, 0] = 1
             rot[1, 1] = np.cos(theta)
