@@ -1,6 +1,5 @@
 import numpy as np
 import Frame
-import math
 
 def rigid_transform(a, b):
     a_mean = np.sum(a, axis=1) / np.size(a, axis=1)
@@ -13,5 +12,5 @@ def rigid_transform(a, b):
     r = np.dot(v, np.transpose(u))
     # find p vector
     p = b_mean - np.dot(r, a_mean)
-    F = Frame(r,p)
-    return F
+    f = Frame(r, p)
+    return f
