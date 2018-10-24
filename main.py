@@ -56,8 +56,6 @@ def main():
     print(optpivotSplit[0])
     print(optpivotSplit[10])
 
-    calbodyPoints = np.zeros(len(calbodySplit) - 1, 3)
-
 
 
 
