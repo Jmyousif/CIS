@@ -6,7 +6,7 @@ import numpy as np
 
 def pivot_calibration(r, p, dataframes):
     i = -1 * np.identity(3)
-    i = np.tile(i, (dataframes, 1))
+    # i = np.tile(i, (dataframes, 1))
 
     # first input for least squares
     rot_i_and_identity = np.hstack((r, i)) # [R_i | -I]

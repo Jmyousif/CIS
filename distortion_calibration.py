@@ -1,5 +1,5 @@
 import numpy as np
-import Frame
+from Frame import *
 import three_dimension_transform
 
 # Need to compute Ci_expected for each Ci
@@ -13,18 +13,31 @@ import three_dimension_transform
 # input is data frame
 def distortion_calibration(tracker, object):
 
-    c_expected = None
+    # first read in Calbody (Nd, Na, Nc)
+    # then readings  (ND, NA, NC, nframes
 
-    # for loop?
-    fd = object[0][0]
+    c_expected = np.zeros(np.shape(tracker)[0])
+    Nd = 0
+    Na = 0
+    Nc = 0
+    M1 = np.zeros(2)
+    d = M1[0: Nd - 1, :]
+    a = M1[Nd: Nd + Na - 1, :]
+    c = M1[Nd + Na:, :]
 
-    for frame in tracker:
-        f_d = object[0][0].register(frame[0])
-        f_a = object[0][1].register(frame[1])
+    ND = 0
+    NA = 0
+    NC = 0
+    M2 = np.zeros(2)
+    Nframes = 0
 
-        c_exp.append(object_frame[0][2].transform(f_d.inv.compose(f_a)))
-
-    return c_exp
-
-
-    # bernstein polynomials
+    for i in range(Nframes):
+        sum = i*(ND + NA + NC)
+        D = M2[sum: sum + ND, :]
+        A = M2[sum + ND: sum + ND + NA, :]
+        Fa = three_dimension_transform.rigid_transform(A, a)
+        Fd = three_dimension_transform.rigid_transform(D, d)
+        Fa_n1 = Frame.invert(Fa)
+        F_ac = Fa_n1.FFmult(Fd)
+        c_expected = np.hstack((c_expected, F_ac.FPmult(c)))
+    return c_expected
