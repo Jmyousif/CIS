@@ -1,6 +1,6 @@
 import math
 import numpy as np
-import PointTransformations as PT
+import point_transformations as PT
 
 
 class Frame:

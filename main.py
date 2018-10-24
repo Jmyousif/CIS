@@ -1,13 +1,13 @@
 import numpy as np
 import math
 import Frame
-import PointTransformations as PT
+import point_transformations as PT
 import glob
 import re
 import pivot_calibration
 import opti_tracker
 import distortion_calibration
-import EMtracking
+import em_tracking
 
 
 def main():
@@ -78,7 +78,7 @@ def main():
 
     output.write(Nc + ", " + Nf + ", " + output.name)
 
-    EMpoint = EMtracking.EM_track(run)
+    EMpoint = em_tracking.EM_track(run)
 
     print(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
     output.write(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
