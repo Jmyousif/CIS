@@ -4,16 +4,20 @@ import PointTransformations as PT
 
 
 class Frame:
-    def __init__(self, rot=np.zeros((3, 3)), tr=np.zeros((3, 1))):
+
+    def __init__(self, rotation=np.zeros((3, 3)), translation=np.zeros((3, 1))):
         try:
-            if rot.shape[0] != 3 or rot.shape[1] != 3:
+            if rotation.shape[0] != 3 or rotation.shape[1] != 3:
+                print("bad rot")
                 raise ValueError
-            self.rot = rot
-            if tr.shape[0] != 3 or tr.shape[1] != 1:
+            if translation.shape[0] != 3 or translation.shape[1] != 1:
+                print("bad tr")
                 raise ValueError
-            self.tr = tr
         except ValueError:
             print("Not valid parameters")
+            return
+        self.rot = rotation
+        self.tr = translation
 
     def setRot(self, rot):
         try:
@@ -64,3 +68,9 @@ class Frame:
             return self.rot * p + self.tr
         except ValueError:
             print("input vector is not a column vector!")
+
+    def getRot(self):
+        return self.rot
+
+    def getTr(self):
+        return self.tr

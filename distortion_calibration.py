@@ -17,7 +17,6 @@ def distortion_calibration(run):
     # first read in Calbody (Nd, Na, Nc)
     # then readings  (ND, NA, NC, nframes)
 
-    print(glob.glob('Data\*?-calbody.txt'))
     calbodyArr = glob.glob('Data\*?-calbody.txt')
     calbodyF = open(calbodyArr[run], "r")
     calbodyLines = calbodyF.read().splitlines()
@@ -26,8 +25,6 @@ def distortion_calibration(run):
         calbodySplit[num] = calbodyLines[num].split(',')
         for x in range(len(calbodySplit[num])):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
-    print(calbodySplit[0])
-    print(calbodySplit[10])
 
     c_expected = None
     Nd = calbodySplit[0][0]
@@ -38,7 +35,6 @@ def distortion_calibration(run):
     a = M1[Nd: Nd + Na - 1, :]
     c = M1[Nd + Na:, :]
 
-    print(glob.glob('Data\*?-calreadings.txt'))
     calreadingsArr = glob.glob('Data\*?-calreadings.txt')
     calreadingsF = open(calreadingsArr[run], "r")
     calreadingsLines = calreadingsF.read().splitlines()
@@ -47,8 +43,6 @@ def distortion_calibration(run):
         calreadingsSplit[num] = calreadingsLines[num].split(',')
         for x in range(len(calreadingsSplit[num])):
             calreadingsSplit[num][x] = calreadingsSplit[num][x].strip()
-    print(calreadingsSplit[0])
-    print(calreadingsSplit[10])
 
     ND = calreadingsSplit[0][0]
     NA = calreadingsSplit[0][1]
