@@ -49,7 +49,7 @@ def distortion_calibration(run):
     NC = int(calreadingsSplit[0][2])
     M2 = np.asarray(calreadingsSplit[1:]).astype(float)
     Nframes = int(calreadingsSplit[0][3])
-    print(calreadingsSplit[0][4])
+    #print(calreadingsSplit[0][4])
 
     for i in range(1):
         sum = i*(ND + NA + NC)
@@ -58,8 +58,10 @@ def distortion_calibration(run):
         Fd = three_dimension_transform.rigid_transform(d, D)
         Fa = three_dimension_transform.rigid_transform(a, A)
         Fd_n1 = Fd.invert()
+        print("FdR", Fd_n1.rot)
+        print("Fdp", Fd_n1.tr)
         F_ac = Fd_n1.FFmult(Fa)
         F_acmult = F_ac.FPmult(c)
-        c_expected = np.vstack((c_expected, F_ac.FPmult(c)))
+        #c_expected = np.stack((c_expected, F_ac.FPmult(c)))
 
     return c_expected
