@@ -67,7 +67,7 @@ class Frame:
                 raise ValueError
         except ValueError:
             print("VALERR", flag, "0 ", p_0, "1 " , p_1)
-        return np.add(np.dot(self.rot, p), self.tr).T
+        return np.dot(self.rot, p) + self.tr
 
     def getRot(self):
         return self.rot

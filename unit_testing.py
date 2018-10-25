@@ -11,8 +11,8 @@ class unit_testing():
     testMatrix1 = np.zeros((3, 3))
     testVector1 = np.zeros((3, 1))
     testFrame1 = Frame.Frame(testMatrix1, testVector1)
-    assert (testFrame1.getRot() == np.zeros((3, 3))).all()
-    assert (testFrame1.getTr() == np.zeros((3, 1))).all()
+    assert (testFrame1.getRot() == np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])).all()
+    assert (testFrame1.getTr() == np.array([[0], [0], [0]])).all()
 
     #Testing setRot
     testFrame1.setRot(np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]]))
@@ -36,9 +36,9 @@ class unit_testing():
     assert (testFFprod.getTr() == (np.array([[-1], [5], [4]]))).all()
 
     #Testing FPmult
-    testVector3 = np.array([[7], [7], [7]])
+    testVector3 = np.array([[7], [9], [5]])
     testFPprod = testFrame1.FPmult(testVector3)
-    #assert (testFPprod == (np.))
+    assert (testFPprod == np.array([[-8], [9], [8]])).any()
 
 
 
