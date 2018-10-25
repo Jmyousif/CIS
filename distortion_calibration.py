@@ -26,13 +26,13 @@ def distortion_calibration(run):
         for x in range(len(calbodySplit[num])):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
 
-    c_expected = None
-    Nd = calbodySplit[0][0]
-    Na = calbodySplit[0][1]
-    Nc = calbodySplit[0][2]
-    M1 = calbodySplit[1:]
-    d = M1[0: Nd - 1, :]
-    a = M1[Nd: Nd + Na - 1, :]
+    c_expected = np.empty((3,3))
+    Nd = int(calbodySplit[0][0])
+    Na = int(calbodySplit[0][1])
+    Nc = int(calbodySplit[0][2])
+    M1 = np.asarray(calbodySplit[1:]).astype(float)
+    d = M1[0: Nd, :]
+    a = M1[Nd: Nd + Na, :]
     c = M1[Nd + Na:, :]
 
     calreadingsArr = glob.glob('Data\*?-calreadings.txt')
@@ -44,11 +44,12 @@ def distortion_calibration(run):
         for x in range(len(calreadingsSplit[num])):
             calreadingsSplit[num][x] = calreadingsSplit[num][x].strip()
 
-    ND = calreadingsSplit[0][0]
-    NA = calreadingsSplit[0][1]
-    NC = calreadingsSplit[0][2]
-    M2 = calreadingsSplit[1:]
-    Nframes = calreadingsSplit[0][3]
+    ND = int(calreadingsSplit[0][0])
+    NA = int(calreadingsSplit[0][1])
+    NC = int(calreadingsSplit[0][2])
+    M2 = np.asarray(calreadingsSplit[1:]).astype(float)
+    Nframes = int(calreadingsSplit[0][3])
+
 
     for i in range(Nframes):
         sum = i*(ND + NA + NC)
@@ -56,7 +57,9 @@ def distortion_calibration(run):
         A = M2[sum + ND: sum + ND + NA, :]
         Fa = three_dimension_transform.rigid_transform(A, a)
         Fd = three_dimension_transform.rigid_transform(D, d)
-        Fa_n1 = Frame.invert(Fa)
-        F_ac = Fa_n1.FFmult(Fd)
-        c_expected = np.hstack((c_expected, F_ac.FPmult(c)))
+        Fd_n1 = Fd.invert()
+        F_ac = Fd_n1.FFmult(Fa)
+        F_acmult = F_ac.FPmult(c)
+        print(c_expected.shape, type(F_acmult))
+        c_expected = np.vstack((c_expected, F_ac.FPmult(c)))
     return c_expected

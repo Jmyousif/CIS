@@ -78,11 +78,11 @@ def main():
 
     output.write(Nc + ", " + Nf + ", " + output.name)
 
-    EMpoint = em_tracking.EM_track(run)
+   # EMpoint = em_tracking.EM_track(run)
 
-    print(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
-    output.write(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
-
+    #print(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
+    #output.write(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
+    output.write(str(distortion_calibration.distortion_calibration(run)))
 
 
 

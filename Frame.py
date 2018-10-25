@@ -7,11 +7,13 @@ class Frame:
 
     def __init__(self, rotation=np.zeros((3, 3)), translation=np.zeros((3, 1))):
         try:
-            if rotation.shape[0] != 3 or rotation.shape[1] != 3:
-                print("bad rot")
+            if not rotation.shape[0] == 3 or not rotation.shape[1] == 3:
+                print("bad rot", rotation.shape)
                 raise ValueError
-            if translation.shape[0] != 3 or translation.shape[1] != 1:
-                print("bad tr")
+            translation_0 = translation.shape[0]
+            translation_1 = translation.shape[1]
+            if not translation_0 * translation_1 == 3:
+                print("bad tr", translation.shape)
                 raise ValueError
         except ValueError:
             print("Not valid parameters")
@@ -21,7 +23,7 @@ class Frame:
 
     def setRot(self, rot):
         try:
-            if rot.shape[0] != 3 or rot.shape[1] != 3:
+            if not rot.shape[0] == 3 or not rot.shape[1] == 3:
                 raise ValueError
             self.rot = rot
         except ValueError:
@@ -30,7 +32,7 @@ class Frame:
 
     def setTr(self, tr):
         try:
-            if tr.shape[0] != 3 or tr.shape[1] != 31:
+            if not tr.shape[0] * tr.shape[1] == 3:
                 raise ValueError
             self.tr = tr
         except ValueError:
@@ -44,14 +46,13 @@ class Frame:
             return
         return Frame(self.rot * F.rot, self.rot * F.tr + self.tr)
 
-    def invert(self, f):
+    def invert(self):
         try:
-            if not isinstance(f, Frame):
+            if not isinstance(self, Frame):
                 raise ValueError
-            f.setRot(np.invert(f.rot))
-            f.setTr(np.dot(-f.rot, f.tr))
         except ValueError:
             print("Not a frame!")
+        return Frame(np.linalg.inv(self.rot), np.dot(-self.rot, self.tr))
 
     def FFmult(self, f):
         try:
@@ -62,12 +63,17 @@ class Frame:
             print("not a frame!")
 
     def FPmult(self, p):
+        p_0 = p.shape[0]
+        p_1 = p.shape[1]
+        if p_0 == 3 or p_1 == 3:
+            flag = True
         try:
-            if p.shape[0] != 3 or p.shape[1] != 1:
+            if not flag:
+                print("ERR")
                 raise ValueError
-            return self.rot * p + self.tr
         except ValueError:
-            print("input vector is not a column vector!")
+            print("VALERR", flag, "0 ", p_0, "1 " , p_1)
+        return np.add(np.dot(self.rot, p.T), self.tr).T
 
     def getRot(self):
         return self.rot
