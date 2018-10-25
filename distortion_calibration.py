@@ -55,9 +55,7 @@ def distortion_calibration(run):
         sum = i*(ND + NA + NC)
         D = M2[sum: sum + ND, :]
         A = M2[sum + ND: sum + ND + NA, :]
-        print("fd")
         Fd = three_dimension_transform.rigid_transform(D, d)
-        print("fa")
         Fa = three_dimension_transform.rigid_transform(A, a)
         Fd_n1 = Fd.invert()
         F_ac = Fd_n1.FFmult(Fa)

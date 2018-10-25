@@ -74,11 +74,13 @@ def main():
     # Assigning Nc and Nframes, and writing those along with the output filename to the output file
     Nc = calreadingsSplit[2].strip()
     Nf = calreadingsSplit[3].strip()
-    output.write(Nc + ", " + Nf + ", " + output.name)
+    output.write(Nc + ", " + Nf + ", " + output.name + "\n")
 
-    #EMpoint = em_tracking.EM_track(run)
-    #print(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
-    #output.write(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
+    EMpoint = em_tracking.EM_track(run)
+    output.write(str(EMpoint[1][0]) + "\n")
+
+    optipoint = opti_tracker.opti_track(run)
+    output.write(str(optipoint[1][0]) + "\n")
 
 
     output.write(str(distortion_calibration.distortion_calibration(run)))
