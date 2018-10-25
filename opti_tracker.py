@@ -8,7 +8,7 @@ import glob
 def opti_track(run):
 
     # file io for data input
-    calbodyArr = glob.glob('Data\*?-calbody.txt')
+    calbodyArr = glob.glob('Data/*calbody.txt')
     calbodyF = open(calbodyArr[run], "r")
     calbodyLines = calbodyF.read().splitlines()
     calbodySplit = [[0 for x in range(3)] for y in range(len(calbodyLines))]
@@ -16,7 +16,7 @@ def opti_track(run):
         calbodySplit[num] = calbodyLines[num].split(',')
         for x in range(len(calbodySplit[num])):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
-    optpivotArr = glob.glob('Data\*?-optpivot.txt')
+    optpivotArr = glob.glob('Data/*optpivot.txt')
     optpivotF = open(optpivotArr[run], "r")
     optpivotLines = optpivotF.read().splitlines()
     optpivotSplit = [[0 for x in range(3)] for y in range(len(optpivotLines))]
@@ -40,8 +40,9 @@ def opti_track(run):
     Hframe = M[Nd:Nd + Nh, :]
     # Hframe = M[:, 3] = 1
     #Hadjust = np.linalg.lstsq(Fd, Hframe)
-    Hadjust = np.linalg.lstsq(np.array([[], [], []]), Hframe)
-    Hmid = np.sum(Hadjust, axis=1)/np.shape(Hadjust)[0]
+    Hadjust = np.zeros(3)
+
+    Hmid = np.sum(Hadjust, axis=0)/np.shape(Hadjust)[0]
 
     # relative frame
     for i in range(Nframes):
