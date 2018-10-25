@@ -67,7 +67,7 @@ class Frame:
                 raise ValueError
         except ValueError:
             print("not a frame!")
-        return Frame(self.rot  f.rot, np.dot(self.rot, f.tr) + self.tr)
+        return Frame(np.dot(self.rot, f.rot), np.dot(self.rot, f.tr) + self.tr)
 
 
     # Method to multiply a frame by a translation vector
