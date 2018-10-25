@@ -28,14 +28,17 @@ def main():
     Nf = calreadingsSplit[3].strip()
     output.write(Nc + ", " + Nf + ", " + output.name + "\n")
 
+    # Running EM tracker calibration, adding point values to output file
     EMpoint = em_tracking.EM_track(run)
     output.write(str(EMpoint[1][0]) + "\n")
 
+    # Running optical tracker calibration, adding point values to output file
     optipoint = opti_tracker.opti_track(run)
     output.write(str(optipoint[1][0]) + "\n")
 
-
-    output.write(str(distortion_calibration.distortion_calibration(run)))
+    
+    Distortion_calibration = distortion_calibration.distortion_calibration(run)
+    output.write(str(Distortion_calibration))
 
 
 if __name__ == '__main__':
