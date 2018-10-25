@@ -29,12 +29,12 @@ def main():
     output.write(Nc + ", " + Nf + ", " + output.name + "\n")
 
     # Running EM tracker calibration, adding point values to output file
-    EMpoint = em_tracking.EM_track(run)
-    output.write(str(EMpoint[1][0]) + "\n")
+    #EMpoint = em_tracking.EM_track(run)
+    #output.write(str(EMpoint[1][0]) + "\n")
 
     # Running optical tracker calibration, adding point values to output file
-    optipoint = opti_tracker.opti_track(run)
-    output.write(str(optipoint[1][0]) + "\n")
+   # optipoint = opti_tracker.opti_track(run)
+    #output.write(str(optipoint[1][0]) + "\n")
 
     
     Distortion_calibration = distortion_calibration.distortion_calibration(run)

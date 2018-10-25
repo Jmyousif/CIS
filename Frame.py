@@ -11,9 +11,7 @@ class Frame:
             if not rotation.shape[0] == 3 or not rotation.shape[1] == 3:
                 print("bad rot", rotation.shape)
                 raise ValueError
-            translation_0 = translation.shape[0]
-            translation_1 = translation.shape[1]
-            if not translation_0 * translation_1 == 3:
+            if not translation.ndim == 1:
                 print("bad tr", translation.shape)
                 raise ValueError
         except ValueError:
@@ -56,7 +54,7 @@ class Frame:
                 raise ValueError
         except ValueError:
             print("Not a frame!")
-        return Frame(np.linalg.inv(self.rot), np.dot(-self.rot, self.tr))
+        return Frame(np.linalg.inv(self.rot), np.dot(np.linalg.inv(self.rot), self.tr))
 
     # Method to multiply two Frame objects together using the proper composition equation
     # Input parameters of the second frame to be multiplied, the method is operated on the first
@@ -67,7 +65,7 @@ class Frame:
                 raise ValueError
         except ValueError:
             print("not a frame!")
-        return Frame(self.rot, f.rot, np.dot(self.rot, f.tr) + self.tr)
+        return Frame(np.dot(self.rot, f.rot), np.dot(self.rot, f.tr) + self.tr)
 
 
     # Method to multiply a frame by a translation vector
@@ -83,8 +81,8 @@ class Frame:
                 print("ERR")
                 raise ValueError
         except ValueError:
-            print("VALERR", flag, "0 ", p_0, "1 " , p_1)
-        return np.dot(self.rot, p) + self.tr
+            return
+        return np.dot(self.rot, p.T).T + self.tr
 
     # Method to get the rotation matrix of a frame
     # No input parameters
