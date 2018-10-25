@@ -64,8 +64,9 @@ def main():
     run = 0
     output = open("pa1-debug-" + letters[run] + "-testoutput1.txt", "w")
 
-    calreadingsArr = glob.glob('Data\*?-calreadings.txt')
-    calreadingsF = open(calreadingsArr[run], "r")
+    calreadingsArr = glob.glob('Data/*calreadings.txt')
+    print(len(calreadingsArr), type(calreadingsArr), run, calreadingsArr[run])
+    calreadingsF = open(calreadingsArr[run], 'r')
     calreadingsLines = calreadingsF.read().splitlines()
     calreadingsSplit = [[0 for x in range(3)] for y in range(len(calreadingsLines))]
     for num in range(len(calreadingsLines)):
@@ -83,11 +84,6 @@ def main():
     #print(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
     #output.write(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
     output.write(str(distortion_calibration.distortion_calibration(run)))
-
-
-
-
-
 
 
 if __name__ == '__main__':
