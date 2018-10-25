@@ -17,7 +17,7 @@ def distortion_calibration(run):
     # first read in Calbody (Nd, Na, Nc)
     # then readings  (ND, NA, NC, nframes)
 
-    calbodyArr = glob.glob('Data/*calbody.txt')
+    calbodyArr = glob.glob('Data/pa1-debug-a-calbody.txt')
     calbodyF = open(calbodyArr[run], "r")
     calbodyLines = calbodyF.read().splitlines()
     calbodySplit = [[0 for x in range(3)] for y in range(len(calbodyLines))]
@@ -35,7 +35,7 @@ def distortion_calibration(run):
     a = M1[Nd: Nd + Na, :]
     c = M1[Nd + Na:, :]
 
-    calreadingsArr = glob.glob('Data/*calreadings.txt')
+    calreadingsArr = glob.glob('Data/pa1-debug-a-calreadings.txt')
     calreadingsF = open(calreadingsArr[run], "r")
     calreadingsLines = calreadingsF.read().splitlines()
     calreadingsSplit = [[0 for x in range(3)] for y in range(len(calreadingsLines))]
@@ -49,18 +49,17 @@ def distortion_calibration(run):
     NC = int(calreadingsSplit[0][2])
     M2 = np.asarray(calreadingsSplit[1:]).astype(float)
     Nframes = int(calreadingsSplit[0][3])
+    print(calreadingsSplit[0][4])
 
-
-    for i in range(Nframes):
+    for i in range(1):
         sum = i*(ND + NA + NC)
         D = M2[sum: sum + ND, :]
         A = M2[sum + ND: sum + ND + NA, :]
-        print("fd")
-        Fd = three_dimension_transform.rigid_transform(D, d)
-        print("fa")
-        Fa = three_dimension_transform.rigid_transform(A, a)
+        Fd = three_dimension_transform.rigid_transform(d, D)
+        Fa = three_dimension_transform.rigid_transform(a, A)
         Fd_n1 = Fd.invert()
         F_ac = Fd_n1.FFmult(Fa)
         F_acmult = F_ac.FPmult(c)
+
         c_expected = np.vstack((c_expected, F_ac.FPmult(c)))
     return c_expected

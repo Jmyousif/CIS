@@ -58,9 +58,10 @@ class Frame:
         try:
             if not isinstance(f, Frame):
                 raise ValueError
-            return Frame(self.rot * f.rot, np.dot(self.rot, f.tr) + self.tr)
         except ValueError:
             print("not a frame!")
+        return Frame(self.rot  f.rot, np.dot(self.rot, f.tr) + self.tr)
+
 
     def FPmult(self, p):
         p_0 = p.shape[0]
