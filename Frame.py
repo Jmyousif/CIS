@@ -40,12 +40,6 @@ class Frame:
 
         self.tr = tr
 
-    def FFmult(self, F):
-        if not isinstance(F, Frame):
-            print("not a frame!")
-            return
-        return Frame(self.rot * F.rot, self.rot * F.tr + self.tr)
-
     def invert(self):
         try:
             if not isinstance(self, Frame):
@@ -58,7 +52,7 @@ class Frame:
         try:
             if not isinstance(f, Frame):
                 raise ValueError
-            return Frame(self.rot * f.rot, np.dot(self.rot, f.tr) + self.tr)
+            return Frame(np.dot(self.rot, f.rot), np.dot(self.rot, f.tr) + self.tr)
         except ValueError:
             print("not a frame!")
 
@@ -73,7 +67,7 @@ class Frame:
                 raise ValueError
         except ValueError:
             print("VALERR", flag, "0 ", p_0, "1 " , p_1)
-        return np.add(np.dot(self.rot, p.T), self.tr).T
+        return np.add(np.dot(self.rot, p), self.tr).T
 
     def getRot(self):
         return self.rot

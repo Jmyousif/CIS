@@ -83,6 +83,7 @@ def main():
 
     #print(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
     #output.write(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
+
     output.write(str(distortion_calibration.distortion_calibration(run)))
 
 
