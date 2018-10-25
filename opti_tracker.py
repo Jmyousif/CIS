@@ -4,10 +4,10 @@ import pivot_calibration
 import three_dimension_transform
 import glob
 
-
+# Program to apply optical tracker data to perform pivot calibration of the optical tracking probe.
 def opti_track(run):
-    # file io
 
+    # file io for data input
     calbodyArr = glob.glob('Data\*?-calbody.txt')
     calbodyF = open(calbodyArr[run], "r")
     calbodyLines = calbodyF.read().splitlines()
@@ -16,7 +16,6 @@ def opti_track(run):
         calbodySplit[num] = calbodyLines[num].split(',')
         for x in range(len(calbodySplit[num])):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
-
     optpivotArr = glob.glob('Data\*?-optpivot.txt')
     optpivotF = open(optpivotArr[run], "r")
     optpivotLines = optpivotF.read().splitlines()

@@ -1,6 +1,7 @@
 import numpy as np
 import Frame
 
+# Function to calculate the rigid transform of two 3D point sets
 def rigid_transform(b, a):
 
     a_mean = (np.sum(a, axis=0) / np.shape(a)[0])

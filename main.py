@@ -9,7 +9,7 @@ import opti_tracker
 import distortion_calibration
 import em_tracking
 
-
+# Main method to run all methods in and perform file io
 def main():
     # run = 0
     #
@@ -60,29 +60,26 @@ def main():
     # print(optpivotSplit[0])
     # print(optpivotSplit[10])
 
+    # Preliminary code to simplify file operations later
     letters = ['a', 'b', 'c', 'd', 'e', 'f']
     run = 0
     output = open("pa1-debug-" + letters[run] + "-testoutput1.txt", "w")
 
+    # Reading in calreadings file to print Nc and Nframes to output file
     calreadingsArr = glob.glob('Data/*calreadings.txt')
-    print(len(calreadingsArr), type(calreadingsArr), run, calreadingsArr[run])
     calreadingsF = open(calreadingsArr[run], 'r')
     calreadingsLines = calreadingsF.read().splitlines()
-    calreadingsSplit = [[0 for x in range(3)] for y in range(len(calreadingsLines))]
-    for num in range(len(calreadingsLines)):
-        calreadingsSplit[num] = calreadingsLines[num].split(',')
-        for x in range(len(calreadingsSplit[num])):
-            calreadingsSplit[num][x] = calreadingsSplit[num][x].strip()
+    calreadingsSplit = calreadingsLines[0].split(',')
 
-    Nc = calreadingsSplit[0][2]
-    Nf = calreadingsSplit[0][3]
-
+    # Assigning Nc and Nframes, and writing those along with the output filename to the output file
+    Nc = calreadingsSplit[2].strip()
+    Nf = calreadingsSplit[3].strip()
     output.write(Nc + ", " + Nf + ", " + output.name)
 
-   # EMpoint = em_tracking.EM_track(run)
-
+    #EMpoint = em_tracking.EM_track(run)
     #print(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
     #output.write(EMpoint[1][0][0] + ", " + EMpoint[1][0][1] + ", " + EMpoint[1][0][2])
+
 
     output.write(str(distortion_calibration.distortion_calibration(run)))
 

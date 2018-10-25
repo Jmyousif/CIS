@@ -61,6 +61,6 @@ def distortion_calibration(run):
         Fa = three_dimension_transform.rigid_transform(A, a)
         Fd_n1 = Fd.invert()
         F_ac = Fd_n1.FFmult(Fa)
-        F_acmult = F_ac.FPmult(c)
-        c_expected = np.vstack((c_expected, F_ac.FPmult(c)))
+        F_acmult = F_ac.FPmult(c.T)
+        c_expected = np.hstack((c_expected, F_ac.FPmult(c.T)))
     return c_expected
