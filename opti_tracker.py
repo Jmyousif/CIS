@@ -4,10 +4,10 @@ import pivot_calibration
 import three_dimension_transform
 import glob
 
-
+# Program to apply optical tracker data to perform pivot calibration of the optical tracking probe.
 def opti_track(run):
-    # file io
 
+    # file io for data input
     calbodyArr = glob.glob('Data\*?-calbody.txt')
     calbodyF = open(calbodyArr[run], "r")
     calbodyLines = calbodyF.read().splitlines()
@@ -16,7 +16,6 @@ def opti_track(run):
         calbodySplit[num] = calbodyLines[num].split(',')
         for x in range(len(calbodySplit[num])):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
-
     optpivotArr = glob.glob('Data\*?-optpivot.txt')
     optpivotF = open(optpivotArr[run], "r")
     optpivotLines = optpivotF.read().splitlines()
@@ -27,19 +26,21 @@ def opti_track(run):
             optpivotSplit[num][x] = optpivotSplit[num][x].strip()
 
 
-    Nd = calbodySplit[0][0]
-    M = calbodySplit[1:]
-    d = M[:Nd,:] #from CALbody
+    Nd = int(calbodySplit[0][0])
+    M = np.asarray(calbodySplit[1:]).astype(float)
+    d = M[:Nd][:] #from CALbody
 
-    Nh = optpivotSplit[0][1]
-    Nframes = optpivotSplit[0][2]
-    M = optpivotSplit[1:]
-    D = M[:Nd, :]
+    Nh = int(optpivotSplit[0][1])
+    Nframes = int(optpivotSplit[0][2])
+    M = np.asarray(optpivotSplit[1:]).astype(float)
+    D = M[:Nd][:]
     Fd = three_dimension_transform.rigid_transform(d, D)
+    print(Fd)
     # coordinates based on frame 1
     Hframe = M[Nd:Nd + Nh, :]
     # Hframe = M[:, 3] = 1
-    Hadjust = np.linalg.lstsq(Fd, Hframe)
+    #Hadjust = np.linalg.lstsq(Fd, Hframe)
+    Hadjust = np.linalg.lstsq(np.array([[], [], []]), Hframe)
     Hmid = np.sum(Hadjust, axis=1)/np.shape(Hadjust)[0]
 
     # relative frame

@@ -1,8 +1,12 @@
 import numpy as np
 import Frame
 
-def rigid_transform(a, b):
 
+# Function to calculate the rigid transform of two 3D point sets
+def rigid_transform(b, a):
+
+    print(type(a))
+    print(type(b))
     a_mean = (np.sum(a, axis=0) / np.shape(a)[0])
     b_mean = (np.sum(b, axis=0) / np.shape(b)[0])
     a_err = a - a_mean
@@ -14,6 +18,5 @@ def rigid_transform(a, b):
     r = np.dot(v.T, u.T)
     # find p vector
     p = (b_mean - np.dot(r, a_mean)).reshape(3, 1)
-
     f = Frame.Frame(r, p)
     return f

@@ -2,8 +2,7 @@ import numpy as np
 
 # This program takes a rotation and translation and performs pivot calibraiton
 # Inputs: r = rotation matrix, p = translation vector, dataframes = # of frames
-
-
+# Output: The p_pivot vector and the unknown p_t vector in a list.
 def pivot_calibration(r, p, dataframes):
     i = -1 * np.identity(3)
     # i = np.tile(i, (dataframes, 1))

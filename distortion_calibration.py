@@ -60,6 +60,6 @@ def distortion_calibration(run):
         Fd_n1 = Fd.invert()
         F_ac = Fd_n1.FFmult(Fa)
         F_acmult = F_ac.FPmult(c)
-
         c_expected = np.vstack((c_expected, F_ac.FPmult(c)))
+
     return c_expected
