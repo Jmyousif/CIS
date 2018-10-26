@@ -37,8 +37,8 @@ def main():
     #output.write(str(optipoint[1][0]) + "\n")
 
     
-    Distortion_calibration = distortion_calibration.distortion_calibration(run)
-    output.write(str(Distortion_calibration))
+    #Distortion_calibration = distortion_calibration.distortion_calibration(run)
+    #output.write(str(Distortion_calibration))
 
 
 if __name__ == '__main__':
