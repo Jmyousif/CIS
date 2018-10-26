@@ -10,7 +10,7 @@ import glob
 # Output is the ??????????????
 def EM_track(run):
 
-    empivotArr = glob.glob('Data/*empivot.txt')
+    empivotArr = glob.glob('Data/pa1-debug-a-empivot.txt')
     empivotF = open(empivotArr[run], "r")
     empivotLines = empivotF.read().splitlines()
     empivotSplit = [[0 for x in range(3)] for y in range(len(empivotLines))]
@@ -24,6 +24,8 @@ def EM_track(run):
     Ng = int(empivotSplit[0][0])
     Nframes = int(empivotSplit[0][1])
     M = np.asarray(empivotSplit[1:]).astype(float)
+    print(M.shape)
+
     # coordinates based on frame 1
     Gframe = M[:Ng - 1, :]
     Gmid = np.sum(Gframe, axis=0)/np.shape(Gframe)[0]

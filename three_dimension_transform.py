@@ -14,6 +14,9 @@ def rigid_transform(a, b):
     rset = np.dot(a_err.T, b_err)
     u, s, v = np.linalg.svd(rset)
     r = np.dot(v.T, u.T)
+    if np.linalg.det(r) == -1:
+        print("det = -1, reflection. ERROR")
+        return
     # find p vector
     p = b_mean - np.dot(r, a_mean)
     #print("R", r)

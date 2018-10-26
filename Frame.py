@@ -54,7 +54,7 @@ class Frame:
                 raise ValueError
         except ValueError:
             print("Not a frame!")
-        return Frame(np.linalg.inv(self.rot), np.dot(np.linalg.inv(self.rot), self.tr))
+        return Frame(np.linalg.inv(self.rot), -np.dot(np.linalg.inv(self.rot), self.tr))
 
     # Method to multiply two Frame objects together using the proper composition equation
     # Input parameters of the second frame to be multiplied, the method is operated on the first
