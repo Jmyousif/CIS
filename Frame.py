@@ -74,13 +74,7 @@ class Frame:
     # Input parameters of the translation vector, the method is operated on the Frame
     # Output of the result of the multiplication, as a vector
     def FPmult(self, p):
-        try:
-            if (p.ndim == 1 and not p.shape[0] == 3) \
-                    or (p.ndim == 2 and not p.shape[0] * p.shape[1] == 3):
-                print("ERR")
-                raise ValueError
-        except ValueError:
-            return
+
         return np.dot(self.rot, p.T).T + self.tr
 
     # Method to get the rotation matrix of a frame
