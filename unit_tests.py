@@ -48,9 +48,14 @@ class unit_testing:
     # Testing pivot calibration
     # TestMatrix2 = [[0, 0, 1], [0, 1, 0], [-1, 0, 0]], testVector3 = [7, 9, 5]
     p_list = pivot_calibration.pivot_calibration(testMatrix2, testVector3, 10)
+    print(p_list[1].shape)
     print(p_list[1])
-    array = [3.5, 4.5, 2.5]
-    assert np.array_equal(p_list[1], np.array([3.5, 4.5, 2.5]).reshape(3,0))
+    print(type(p_list[1][1]))
+    array = np.asarray([3.5, 4.5, 2.5])
+    print(array.shape)
+    print(array)
+    print(type(array[1]))
+    assert np.allclose(p_list[1], np.asarray([3.5, 4.5, 2.5]))
     # The unknown p_t in this problem should be [3.5, 4.5, 2.5].
 
     # Testing Three-Dimensional Transform, rotation with [[0, -1, 0], [1, 0, 0], [0, 0, 1]] and then translation with
