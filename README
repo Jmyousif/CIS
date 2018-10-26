@@ -1,1 +1,110 @@
-This is an assignment
+Justin Joyce, Jonah Yousif
+Programming Assignment 1
+
+-------------------------------------------------------
+main.py
+
+main()
+Purpose: For compiling all functions and file io into one executable python file
+Input: No command line input or arguments, but it reads in the calbody, calreadings,
+    empivot, and optpivot files
+Output: No command line output, but outputs a file named pa1-debug-?-output.txt
+    where the question mark corresponds to the input file’s letter.
+
+-------------------------------------------------------
+Frame.py
+
+Frame(rotation, translation)
+Purpose: To create a frame object
+Input: Rotation and translation components of the frame
+Output: The newly created frame object
+
+setRot(rot)
+Purpose: To modify a frame’s rotation matrix
+Input: The new rotation matrix
+Output: No output, only modifies the current frame object
+
+setTr(tr)
+Purpose: To modify a frame’s translation vector
+Input: The new translation vector
+Output: No output, only modifies the current frame object
+
+invert()
+Purpose: To invert a frame
+Input: The new inverted frame
+Output: Outputs the inverted frame
+
+FFmult(f)
+Purpose: To multiply two frames together using the correct composition equation
+Input: The method is operated on one frame, and the second frame to be multiplied
+    goes in the parameters of the function
+Output: The product of the two frames
+
+FPmult(p)
+Purpose: To perform a given frame transformation on a three dimensional vector.
+Input: The method is operated on the frame, and the 3D vector goes in the parameters
+    of the function.
+Output: The new vector after the frame transformation
+
+getRot()
+Purpose: To procure the rotation matrix of a frame
+Input: None, method is operated on desired frame
+Output: The rotation matrix of the frame
+
+getTr()
+Purpose: To procure the translation vector of a frame
+Input: None, method is operated on desired frame
+Output: The translation vector of the frame
+
+-------------------------------------------------------
+pivot_calibration.py
+
+pivot_calibration(r, p, dataframes)
+Purpose: To calculate a pivot calibration
+Input: Input is a rotation matrix, and a translation vector.
+Output: The output of this method is the p_pivot vector and the unknown p_t vector of a
+    pivot calibration problem
+
+-------------------------------------------------------
+distortion_calibration.py
+
+distortion_calibration(run)
+Purpose: To compute Ci_expected for each Ci point in the distortion calibration data set by
+    computing the 3D-3D transform between data sets.
+Input: The run number for file io simplification, which then reads in the calbody and
+    calreadings files
+Output: C_expected, a list of the expected data points
+
+-------------------------------------------------------
+three_dimension_transform.py
+
+rigid_transform(b, a)
+Purpose: To calculate a rigid transform between two 3D data sets
+Input: Input of the method is the two 3D point sets in the shapes of 3 by X vectors
+Output: Output of the method is the frame transformation that relates the two 3D point sets
+
+-------------------------------------------------------
+em_tracking.py
+
+EM_track(run)
+Purpose: To apply EM tracking data to a pivot calibration problem and determine the position
+    of the dimple of the calibration post with relation to the EM tracker.
+Input: The run number for file io simplification, which then reads in the empivot file
+Output: The calculated position of the calibration post, p_t, and the pivot vector, p_pivot
+
+-------------------------------------------------------
+opti_tracker.py
+
+opti_track(run)
+Purpose: To apply the optical tracking data to a pivot calibration problem and determine the
+    position of the dimple of the calibration post with relation to the optical tracker.
+Input: The run number for file io simplification, which then reads in the optpivot file
+Output: The calculated position of the calibration post, p_t, and the pivot vector, p_pivot
+
+-------------------------------------------------------
+unit_tests.py
+
+unit_testing()
+Purpose: To run unit tests on each method
+Input: None
+Output: None
