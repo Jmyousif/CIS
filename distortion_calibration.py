@@ -13,12 +13,13 @@ import glob
 
 # input is data frame
 def distortion_calibration(run):
+    letters = ['a', 'b', 'c', 'd', 'e', 'f']
 
     # first read in Calbody (Nd, Na, Nc)
     # then readings  (ND, NA, NC, nframes)
 
-    calbodyArr = glob.glob('Data/pa1-debug-a-calbody.txt')
-    calbodyF = open(calbodyArr[run], "r")
+    calbodyArr = glob.glob('Data/pa1-debug-' + letters[run] + '-calbody.txt')
+    calbodyF = open(calbodyArr[0], "r")
     calbodyLines = calbodyF.read().splitlines()
     calbodySplit = [[0 for x in range(3)] for y in range(len(calbodyLines))]
     for num in range(len(calbodyLines)):
@@ -27,6 +28,7 @@ def distortion_calibration(run):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
 
     c_expected = np.zeros(1)
+    print(c_expected.shape)
     Nd = int(calbodySplit[0][0])
     Na = int(calbodySplit[0][1])
     Nc = int(calbodySplit[0][2])
@@ -35,8 +37,8 @@ def distortion_calibration(run):
     a = M1[Nd: Nd + Na, :]
     c = M1[Nd + Na:, :]
 
-    calreadingsArr = glob.glob('Data/pa1-debug-a-calreadings.txt')
-    calreadingsF = open(calreadingsArr[run], "r")
+    calreadingsArr = glob.glob('Data/pa1-debug-' + letters[run] + '-calreadings.txt')
+    calreadingsF = open(calreadingsArr[0], "r")
     calreadingsLines = calreadingsF.read().splitlines()
     calreadingsSplit = [[0 for x in range(3)] for y in range(len(calreadingsLines))]
     for num in range(len(calreadingsLines)):
@@ -60,6 +62,7 @@ def distortion_calibration(run):
         Fd_n1 = Fd.invert()
         F_ac = Fd_n1.FFmult(Fa)
         cexp_new = F_ac.FPmult(c)
+        print(c_expected)
         if c_expected.size == 1:
             c_expected = cexp_new
         else:

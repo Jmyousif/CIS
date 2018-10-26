@@ -1,15 +1,9 @@
 import Frame
 import three_dimension_transform
-import point_transformations
 import pivot_calibration
-import opti_tracker
-import em_tracking
 import numpy as np
-import glob
 import em_tracking
-import opti_tracker
 import distortion_calibration
-import math
 
 
 class unit_testing:
@@ -53,8 +47,8 @@ class unit_testing:
     assert np.allclose(p_list[1], np.asarray([3.5, 4.5, 2.5]))
     # The unknown p_t in this problem should be [3.5, 4.5, 2.5].
 
-
-    # Testing Three-Dimensional Transform, rotation with [[0, -1, 0], [1, 0, 0], [0, 0, 1]] and then translation with
+    # Testing Three-Dimensional Transform, rotation with
+    # [[0, -1, 0], [1, 0, 0], [0, 0, 1]] and then translation with
     # [3, 2, 1]
     pointset1 = np.array([[0, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9],
                           [8, 9, 10], [9, 10, 11]])
@@ -63,11 +57,14 @@ class unit_testing:
     threedframe = three_dimension_transform.rigid_transform(pointset1, pointset2)
     # 90 degree rotation matrix, add 3,2,1
 
+    # Testing Distortion Calibration
+
+
     # Testing EM_Tracker on pa1-a and comparing with its given output file
     assert (np.allclose(em_tracking.EM_track(0)[0], np.asarray([202.89, 190.20, 201.55])))
 
     # Testing Optical_Tracker
-    #print(opti_tracker.opti_track(0))
+    # print(opti_tracker.opti_track(0))
 
     # #To test with read-in files
     # letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
