@@ -5,6 +5,10 @@ import pivot_calibration
 import opti_tracker
 import em_tracking
 import numpy as np
+import glob
+import em_tracking
+import opti_tracker
+import distortion_calibration
 
 class unit_testing():
     #testing Constructor
@@ -41,6 +45,32 @@ class unit_testing():
     assert (testFPprod == np.array([[-8], [9], [8]])).any()
 
 
+    #To test with read-in files, asserting that each file is the same as the given output file
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    for i in range(len(letters)):
+        output = open("pa1-debug-" + letters[i] + "-testoutput2.txt", "w")
+
+        calreadingsArr = glob.glob('Data/pa1-debug-' + letters[i] + '-calreadings.txt')
+        # Reading in calreadings file to print Nc and Nframes to output file
+        calreadingsF = open(calreadingsArr[i], 'r')
+        calreadingsLines = calreadingsF.read().splitlines()
+        calreadingsSplit = calreadingsLines[0].split(',')
+
+        # Assigning Nc and Nframes, and writing those along with the output filename to the output file
+        Nc = calreadingsSplit[2].strip()
+        Nf = calreadingsSplit[3].strip()
+        output.write(Nc + ", " + Nf + ", " + output.name + "\n")
+
+        # Running EM tracker calibration, adding point values to output file
+        EMpoint = em_tracking.EM_track(i)
+        output.write(str(EMpoint[1][0]) + "\n")
+
+        # Running optical tracker calibration, adding point values to output file
+        optipoint = opti_tracker.opti_track(i)
+        output.write(str(optipoint[1][0]) + "\n")
+
+        Distortion_calibration = distortion_calibration.distortion_calibration(i)
+        output.write(str(Distortion_calibration))
 
 
 
