@@ -11,7 +11,8 @@ class Frame:
             if not rotation.shape[0] == 3 or not rotation.shape[1] == 3:
                 print("bad rot", rotation.shape)
                 raise ValueError
-            if not translation.ndim == 1:
+            if (translation.ndim == 1 and not translation.shape[0] == 3) \
+                    or (translation.ndim == 2 and not translation.shape[0] * translation.shape[1] == 3):
                 print("bad tr", translation.shape)
                 raise ValueError
         except ValueError:
@@ -37,7 +38,8 @@ class Frame:
     # No output
     def setTr(self, tr):
         try:
-            if not tr.shape[0] * tr.shape[1] == 3:
+            if (tr.ndim == 1 and not tr.shape[0] == 3) \
+                    or (tr.ndim == 2 and not tr.shape[0] * tr.shape[1] == 3):
                 raise ValueError
             self.tr = tr
         except ValueError:
@@ -72,12 +74,9 @@ class Frame:
     # Input parameters of the translation vector, the method is operated on the Frame
     # Output of the result of the multiplication, as a vector
     def FPmult(self, p):
-        p_0 = p.shape[0]
-        p_1 = p.shape[1]
-        if p_0 == 3 or p_1 == 3:
-            flag = True
         try:
-            if not flag:
+            if (p.ndim == 1 and not p.shape[0] == 3) \
+                    or (p.ndim == 2 and not p.shape[0] * p.shape[1] == 3):
                 print("ERR")
                 raise ValueError
         except ValueError:
