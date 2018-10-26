@@ -49,11 +49,22 @@ class unit_testing():
     p_list = pivot_calibration.pivot_calibration(testMatrix2, testVector3, 10)
     print(p_list)
 
-    #Testing Three-Dimensional Transform
+    #Testing Three-Dimensional Transform, rotation with [[0, -1, 0], [1, 0, 0], [0, 0, 1]] and then translation with
+        # [3, 2, 1]
+    
+    pointset1 = np.array([[0, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6], [5, 6, 7], [6, 7, 8], [7, 8, 9],
+                          [8, 9, 10], [9, 10, 11]])
+    pointset2 = np.array([[2, 2, 3], [1, 3, 4], [0, 4, 5], [-1, 5, 6], [-2, 6, 7], [-3, 7, 8], [-4, 8, 9],
+                          [-5, 9, 10], [-6, 10, 11], [-7, 11, 12]])
+    threedframe = three_dimension_transform.rigid_transform(pointset1, pointset2)
+    print(threedframe.getRot(), threedframe.getTr())
+    # 90 degree rotation, add 1,2,3
 
     #Testing EM_Tracker
+    #print(em_tracking.EM_track(0))
 
     #Testing Optical_Tracker
+    #print(opti_tracker.opti_track(0))
 
     # #To test with read-in files
     # letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
