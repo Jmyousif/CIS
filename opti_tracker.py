@@ -5,19 +5,21 @@ import three_dimension_transform
 import glob
 
 # Program to apply optical tracker data to perform pivot calibration of the optical tracking probe.
-def opti_track(run):
+def opti_track(run, runtype):
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+    type = ['debug', 'unknown']
 
     # file io for data input
-    calbodyArr = glob.glob('Data/pa1-debug-a-calbody.txt')
-    calbodyF = open(calbodyArr[run], "r")
+    calbodyArr = glob.glob('Data/pa1-' + type[runtype] + '-' + letters[run] + '-calbody.txt')
+    calbodyF = open(calbodyArr[0], "r")
     calbodyLines = calbodyF.read().splitlines()
     calbodySplit = [[0 for x in range(3)] for y in range(len(calbodyLines))]
     for num in range(len(calbodyLines)):
         calbodySplit[num] = calbodyLines[num].split(',')
         for x in range(len(calbodySplit[num])):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
-    optpivotArr = glob.glob('Data/pa1-debug-a-optpivot.txt')
-    optpivotF = open(optpivotArr[run], "r")
+    optpivotArr = glob.glob('Data/pa1-' + type[runtype] + '-' + letters[run] + '-optpivot.txt')
+    optpivotF = open(optpivotArr[0], "r")
     optpivotLines = optpivotF.read().splitlines()
     optpivotSplit = [[0 for x in range(3)] for y in range(len(optpivotLines))]
     for num in range(len(optpivotLines)):
@@ -29,12 +31,10 @@ def opti_track(run):
     Nd = int(calbodySplit[0][0])
     M1 = np.asarray(calbodySplit[1:]).astype(float)
     d = M1[:Nd][:] #from CALbody
-    #print(d.shape, "cal", d)
     Nh = int(optpivotSplit[0][1])
     Nframes = int(optpivotSplit[0][2])
     M2 = np.asarray(optpivotSplit[1:]).astype(float)
     D = M2[:Nd][:]
-    #print(D.shape, "O", D)
     Fd = three_dimension_transform.rigid_transform(D, d)
     M3 = np.zeros(1)
     for i in range(Nframes):

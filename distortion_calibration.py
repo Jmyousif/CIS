@@ -12,13 +12,14 @@ import glob
 # output Cexpected
 
 # input is data frame
-def distortion_calibration(run):
-    letters = ['a', 'b', 'c', 'd', 'e', 'f']
+def distortion_calibration(run, runtype):
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+    type = ['debug', 'unknown']
 
     # first read in Calbody (Nd, Na, Nc)
     # then readings  (ND, NA, NC, nframes)
 
-    calbodyArr = glob.glob('Data/pa1-debug-' + letters[run] + '-calbody.txt')
+    calbodyArr = glob.glob('Data/pa1-' + type[runtype] + '-' + letters[run] + '-calbody.txt')
     calbodyF = open(calbodyArr[0], "r")
     calbodyLines = calbodyF.read().splitlines()
     calbodySplit = [[0 for x in range(3)] for y in range(len(calbodyLines))]
@@ -28,7 +29,6 @@ def distortion_calibration(run):
             calbodySplit[num][x] = calbodySplit[num][x].strip()
 
     c_expected = np.zeros(1)
-    print(c_expected.shape)
     Nd = int(calbodySplit[0][0])
     Na = int(calbodySplit[0][1])
     Nc = int(calbodySplit[0][2])
@@ -37,7 +37,7 @@ def distortion_calibration(run):
     a = M1[Nd: Nd + Na, :]
     c = M1[Nd + Na:, :]
 
-    calreadingsArr = glob.glob('Data/pa1-debug-' + letters[run] + '-calreadings.txt')
+    calreadingsArr = glob.glob('Data/pa1-' + type[runtype] + '-' + letters[run] + '-calreadings.txt')
     calreadingsF = open(calreadingsArr[0], "r")
     calreadingsLines = calreadingsF.read().splitlines()
     calreadingsSplit = [[0 for x in range(3)] for y in range(len(calreadingsLines))]
@@ -51,7 +51,6 @@ def distortion_calibration(run):
     NC = int(calreadingsSplit[0][2])
     M2 = np.asarray(calreadingsSplit[1:]).astype(float)
     Nframes = int(calreadingsSplit[0][3])
-    #print(calreadingsSplit[0][4])
 
     for i in range(Nframes):
         sum = i*(ND + NA + NC)
@@ -62,7 +61,6 @@ def distortion_calibration(run):
         Fd_n1 = Fd.invert()
         F_ac = Fd_n1.FFmult(Fa)
         cexp_new = F_ac.FPmult(c)
-        print(c_expected)
         if c_expected.size == 1:
             c_expected = cexp_new
         else:

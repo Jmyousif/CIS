@@ -14,10 +14,13 @@ def main():
 
     # Preliminary code to simplify file operations later
     run = 0
-    letters = ['a', 'b', 'c', 'd', 'e', 'f']
-    output = open("pa1-debug-" + letters[run] + "-testoutput.txt", "w")
+    runtype = 0
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+    type = ['debug', 'unknown']
+    output = open("pa1-" + type[runtype] + "-" + letters[run] + "-testoutput.txt", "w")
+    np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
-    calreadingsArr = glob.glob('Data/pa1-debug-' + letters[run] + '-calreadings.txt')
+    calreadingsArr = glob.glob('Data/pa1-' + type[runtype] + '-' + letters[run] + '-calreadings.txt')
     # Reading in calreadings file to print Nc and Nframes to output file
     calreadingsF = open(calreadingsArr[0], 'r')
     calreadingsLines = calreadingsF.read().splitlines()
@@ -29,16 +32,20 @@ def main():
     output.write(Nc + ", " + Nf + ", " + output.name + "\n")
 
     # Running EM tracker calibration, adding point values to output file
-
-    EMpoint = em_tracking.EM_track(run)
-    output.write(str(EMpoint[0]) + "\n")
+    EMpoint = np.around(em_tracking.EM_track(run, runtype), 2)
+    output.write("  " + str(EMpoint[0][0]) + ",   " + str(EMpoint[0][1]) + ",   " + str(EMpoint[0][2]) + "\n")
 
     # Running optical tracker calibration, adding point values to output file
-    optipoint = opti_tracker.opti_track(run)
-    output.write(str(optipoint[0]) + "\n")
+    optipoint = np.around(opti_tracker.opti_track(run, runtype), 2)
+    output.write("  " + str(optipoint[0][0]) + ",   " + str(optipoint[0][1]) + ",   " + str(optipoint[0][2]) + "\n")
 
-    Distortion_calibration = distortion_calibration.distortion_calibration(run)
-    output.write(str(Distortion_calibration))
+    Distortion_calibration = np.around(distortion_calibration.distortion_calibration(run, runtype), 2)
+    for i in range(len(Distortion_calibration)):
+        for j in range(len(Distortion_calibration[i])):
+            output.write("  " + str(Distortion_calibration[i][j]))
+            if (j < len(Distortion_calibration[i]) - 1):
+                output.write(", ")
+        output.write("\n")
 
 
 if __name__ == '__main__':

@@ -3,7 +3,9 @@ import three_dimension_transform
 import pivot_calibration
 import numpy as np
 import em_tracking
+import opti_tracker
 import distortion_calibration
+import glob
 
 
 class unit_testing:
@@ -58,13 +60,24 @@ class unit_testing:
     # 90 degree rotation matrix, add 3,2,1
 
     # Testing Distortion Calibration
-
+    outputArr = glob.glob('Data/pa1-debug-a-output1.txt')
+    outputF = open(outputArr[0], "r")
+    outputLines = outputF.read().splitlines()
+    outputSplit = [[0 for x in range(3)] for y in range(len(outputLines))]
+    for num in range(len(outputLines)):
+        outputSplit[num] = outputLines[num].split(',')
+        for x in range(len(outputSplit[num])):
+            outputSplit[num][x] = outputSplit[num][x].strip()
+    np.testing.assert_almost_equal(distortion_calibration.distortion_calibration(0, 0),
+                        np.asarray(outputSplit[3:][:]).astype(float), decimal=2)
+    np.testing.assert_almost_equal(np.subtract(distortion_calibration.distortion_calibration(0, 0),
+                        np.asarray(outputSplit[3:][:]).astype(float)).round(1), np.asarray(np.zeros((216, 3))))
 
     # Testing EM_Tracker on pa1-a and comparing with its given output file
-    assert (np.allclose(em_tracking.EM_track(0)[0], np.asarray([202.89, 190.20, 201.55])))
+    assert (np.allclose(em_tracking.EM_track(0, 0)[0], np.asarray([202.89, 190.20, 201.55])))
 
     # Testing Optical_Tracker
-    # print(opti_tracker.opti_track(0))
+    assert (np.allclose(opti_tracker.opti_track(0, 0)[0], np.asarray([403.49, 390.87, 199.8])))
 
     # #To test with read-in files
     # letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']

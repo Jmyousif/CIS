@@ -7,11 +7,12 @@ import glob
 # Method to apply EM tracking data to perform a pivot calibration for the EM probe
 # input is the "run," determining which data file set to use
 # Output is the
-def EM_track(run):
-    letters = ['a', 'b', 'c', 'd', 'e', 'f']
+def EM_track(run, runtype):
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+    type = ['debug', 'unknown']
 
     # File IO
-    empivotArr = glob.glob('Data/pa1-debug-' + letters[run] + '-empivot.txt')
+    empivotArr = glob.glob('Data/pa1-' + type[runtype] + '-' + letters[run] + '-empivot.txt')
     empivotF = open(empivotArr[0], "r")
     empivotLines = empivotF.read().splitlines()
     empivotSplit = [[0 for x in range(3)] for y in range(len(empivotLines))]
