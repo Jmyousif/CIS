@@ -1,6 +1,6 @@
 import numpy as np
 import Frame
-
+import math
 
 # Function to calculate the rigid transform of two 3D point sets
 def rigid_transform(a, b):
@@ -13,13 +13,15 @@ def rigid_transform(a, b):
     # first calculate H
     rset = np.dot(a_err.T, b_err)
     u, s, v = np.linalg.svd(rset)
-    r = np.dot(v.T, u.T)
-    if np.linalg.det(r) == -1:
-        print("det = -1, reflection. ERROR")
-        return
+
+    if math.floor(np.linalg.det(v.dot(u))) == -1:
+        I = np.identity(3)
+        I[-1, -1] = -1
+        r = np.dot(v.T, np.dot(I, u.T))
+    else:
+        r = np.dot(v.T, u.T)
+
     # find p vector
     p = b_mean - np.dot(r, a_mean)
-    #print("R", r)
-    #print("p", p)
     f = Frame.Frame(r, p)
     return f
