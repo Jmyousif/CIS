@@ -1,8 +1,6 @@
-import math
 import numpy as np
-import point_transformations as PT
 
-
+# Jonah Yousif, Justin Joyce
 # A Frame Class to imitate a frame transformation as an object
 class Frame:
     # Initialization of a frame, input is a rotation matrix and a translation vector

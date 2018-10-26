@@ -1,14 +1,11 @@
 import numpy as np
-import math
-import Frame
-import point_transformations as PT
 import glob
-import re
-import pivot_calibration
 import opti_tracker
 import distortion_calibration
 import em_tracking
 
+
+# Jonah Yousif, Justin Joyce
 # Main method to run all methods in and perform file io
 def main():
 
@@ -43,7 +40,7 @@ def main():
     for i in range(len(Distortion_calibration)):
         for j in range(len(Distortion_calibration[i])):
             output.write("  " + str(Distortion_calibration[i][j]))
-            if (j < len(Distortion_calibration[i]) - 1):
+            if j < len(Distortion_calibration[i]) - 1:
                 output.write(", ")
         output.write("\n")
 

@@ -2,6 +2,8 @@ import numpy as np
 import Frame
 import math
 
+
+# Jonah Yousif, Justin Joyce
 # Function to calculate the rigid transform of two 3D point sets
 def rigid_transform(a, b):
 

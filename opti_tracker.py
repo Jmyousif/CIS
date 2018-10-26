@@ -1,9 +1,9 @@
-import numpy as np
 from Frame import *
 import pivot_calibration
 import three_dimension_transform
 import glob
 
+# Jonah Yousif, Justin Joyce
 # Program to apply optical tracker data to perform pivot calibration of the optical tracking probe.
 def opti_track(run, runtype):
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']

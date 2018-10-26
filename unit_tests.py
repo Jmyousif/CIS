@@ -8,6 +8,8 @@ import distortion_calibration
 import glob
 
 
+# Jonah Yousif, Justin Joyce
+# Class to perform specific tests on methods to ensure correct output
 class unit_testing:
     # Testing Constructor
     testMatrix1 = np.zeros((3, 3))
@@ -78,35 +80,6 @@ class unit_testing:
 
     # Testing Optical_Tracker
     assert (np.allclose(opti_tracker.opti_track(0, 0)[0], np.asarray([403.49, 390.87, 199.8])))
-
-    # #To test with read-in files
-    # letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-    # for i in range(len(letters)):
-    #     output = open("pa1-debug-" + letters[i] + "-testoutput2.txt", "w")
-    #
-    #     calreadingsArr = glob.glob('Data/pa1-debug-' + letters[i] + '-calreadings.txt')
-    #     # Reading in calreadings file to print Nc and Nframes to output file
-    #     calreadingsF = open(calreadingsArr[i], 'r')
-    #     calreadingsLines = calreadingsF.read().splitlines()
-    #     calreadingsSplit = calreadingsLines[0].split(',')
-    #
-    #     # Assigning Nc and Nframes, and writing those along with the output filename to the output file
-    #     Nc = calreadingsSplit[2].strip()
-    #     Nf = calreadingsSplit[3].strip()
-    #     output.write(Nc + ", " + Nf + ", " + output.name + "\n")
-    #
-    #     # Running EM tracker calibration, adding point values to output file
-    #     EMpoint = em_tracking.EM_track(i)
-    #     output.write(str(EMpoint[1][0]) + "\n")
-    #
-    #     # Running optical tracker calibration, adding point values to output file
-    #     optipoint = opti_tracker.opti_track(i)
-    #     output.write(str(optipoint[1][0]) + "\n")
-    #
-    #     Distortion_calibration = distortion_calibration.distortion_calibration(i)
-    #     output.write(str(Distortion_calibration))
-
-
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
-import numpy as np
 from Frame import *
 import three_dimension_transform
 import glob
 
+# Jonah Yousif, Justin Joyce
 # Need to compute Ci_expected for each Ci
 # for each calib frame compute transform between optical and EM
 # ie: find FD s.t. D = FD dot d
@@ -10,6 +10,7 @@ import glob
 # ie: Aj = FA dot a
 # given FD and FA compute Cexp = FD-1 dot FA dot c
 # output Cexpected
+
 
 # input is data frame
 def distortion_calibration(run, runtype):

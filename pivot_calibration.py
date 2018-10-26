@@ -1,5 +1,6 @@
 import numpy as np
 
+# Jonah Yousif, Justin Joyce
 # This program takes a rotation and translation and performs pivot calibration
 # Inputs: r = rotation matrix, p = translation vector, dataframes = # of frames
 # Output: The p_pivot vector and the unknown p_t vector in a list.
