@@ -1,4 +1,3 @@
-import numpy as np
 from Frame import *
 import pivot_calibration
 import three_dimension_transform
@@ -9,9 +8,11 @@ import glob
 # input is the "run," determining which data file set to use
 # Output is the
 def EM_track(run):
+    letters = ['a', 'b', 'c', 'd', 'e', 'f']
 
-    empivotArr = glob.glob('Data/pa1-debug-a-empivot.txt')
-    empivotF = open(empivotArr[run], "r")
+    # File IO
+    empivotArr = glob.glob('Data/pa1-debug-' + letters[run] + '-empivot.txt')
+    empivotF = open(empivotArr[0], "r")
     empivotLines = empivotF.read().splitlines()
     empivotSplit = [[0 for x in range(3)] for y in range(len(empivotLines))]
     for num in range(len(empivotLines)):
@@ -19,8 +20,7 @@ def EM_track(run):
         for x in range(len(empivotSplit[num])):
             empivotSplit[num][x] = empivotSplit[num][x].strip()
 
-
-    # file io
+    # Assigning Variables
     Ng = int(empivotSplit[0][0])
     Nframes = int(empivotSplit[0][1])
     M = np.asarray(empivotSplit[1:]).astype(float)
