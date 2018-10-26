@@ -9,9 +9,10 @@ import glob
 # input is the "run," determining which data file set to use
 # Output is the
 def EM_track(run):
+    letters = ['a', 'b', 'c', 'd', 'e', 'f']
 
-    empivotArr = glob.glob('Data/pa1-debug-a-empivot.txt')
-    empivotF = open(empivotArr[run], "r")
+    empivotArr = glob.glob('Data/pa1-debug-' + letters[run] + '-empivot.txt')
+    empivotF = open(empivotArr[0], "r")
     empivotLines = empivotF.read().splitlines()
     empivotSplit = [[0 for x in range(3)] for y in range(len(empivotLines))]
     for num in range(len(empivotLines)):

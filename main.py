@@ -13,8 +13,8 @@ import em_tracking
 def main():
 
     # Preliminary code to simplify file operations later
-    letters = ['a', 'b', 'c', 'd', 'e', 'f']
     run = 0
+    letters = ['a', 'b', 'c', 'd', 'e', 'f']
     output = open("pa1-debug-" + letters[run] + "-testoutput1.txt", "w")
 
     calreadingsArr = glob.glob('Data/pa1-debug-a-calreadings.txt')

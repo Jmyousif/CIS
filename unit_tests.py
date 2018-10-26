@@ -9,6 +9,7 @@ import glob
 import em_tracking
 import opti_tracker
 import distortion_calibration
+import math
 
 
 class unit_testing:
@@ -47,16 +48,11 @@ class unit_testing:
 
     # Testing pivot calibration
     # TestMatrix2 = [[0, 0, 1], [0, 1, 0], [-1, 0, 0]], testVector3 = [7, 9, 5]
-    p_list = pivot_calibration.pivot_calibration(testMatrix2, testVector3, 10)
-    print(p_list[1].shape)
-    print(p_list[1])
-    print(type(p_list[1][1]))
+    p_list = pivot_calibration.pivot_calibration(testMatrix2, testVector3, 1)
     array = np.asarray([3.5, 4.5, 2.5])
-    print(array.shape)
-    print(array)
-    print(type(array[1]))
     assert np.allclose(p_list[1], np.asarray([3.5, 4.5, 2.5]))
     # The unknown p_t in this problem should be [3.5, 4.5, 2.5].
+
 
     # Testing Three-Dimensional Transform, rotation with [[0, -1, 0], [1, 0, 0], [0, 0, 1]] and then translation with
     # [3, 2, 1]
@@ -65,11 +61,10 @@ class unit_testing:
     pointset2 = np.array([[2, 2, 3], [1, 3, 4], [0, 4, 5], [-1, 5, 6], [-2, 6, 7], [-3, 7, 8], [-4, 8, 9],
                           [-5, 9, 10], [-6, 10, 11], [-7, 11, 12]])
     threedframe = three_dimension_transform.rigid_transform(pointset1, pointset2)
-    print(threedframe.getRot(), threedframe.getTr())
     # 90 degree rotation matrix, add 3,2,1
 
-    # Testing EM_Tracker
-    #print(em_tracking.EM_track(0))
+    # Testing EM_Tracker on pa1-a and comparing with its given output file
+    assert (np.allclose(em_tracking.EM_track(0)[0], np.asarray([202.89, 190.20, 201.55])))
 
     # Testing Optical_Tracker
     #print(opti_tracker.opti_track(0))
